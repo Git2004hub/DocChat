@@ -31,8 +31,8 @@ Le projet est développé avec **Next.js**, **React**, **TypeScript**, **LangCha
 
 ## 2. Démo et liens
 
-- **Application Vercel :** `(https://doc-chat-alceq4w5b-ayman-elouahi.vercel.app/)`
-- **Repository GitHub :** `(https://github.com/Git2004hub/DocChat/tree/main)`
+- **Application Vercel :** `https://doc-chat-7vojs5r5r-ayman-elouahi.vercel.app/`
+- **Repository GitHub :** `https://github.com/Git2004hub/DocChat`
 
 Un document PDF d'exemple ainsi qu'un jeu d'évaluation RAG sont disponibles dans le dossier [`documents/`](./documents).
 
@@ -114,25 +114,27 @@ Cette séparation permet de garder les différentes responsabilités indépendan
 
 ## 5. Stack technique
 
-**Couche**	            **Technologie**	                **Rôle**
-Frontend	            Next.js, React, TypeScript	    Interface utilisateur et gestion du chat
-Style	                Tailwind CSS	                Mise en forme responsive de l'interface
-Backend	                Next.js Route Handlers, Node.js	Endpoints REST et orchestration du pipeline
-Parsing PDF	            pdf-parse	                    Extraction du texte page par page
-Chunking	            LangChain Text Splitters	    Découpage récursif du texte avec overlap
-LLM	                    Claude / Anthropic	            Génération des réponses
-Embeddings	            Gemini Embeddings	            Vectorisation des chunks et des questions
-Orchestration LLM	    LangChain	                    Messages, modèle Claude et text splitting
-Base vectorielle	    Chroma Cloud	                Persistance et recherche vectorielle
-Similarité	            Cosine	                        Classement des chunks pertinents
-Streaming	            Server-Sent Events (SSE)	    Transmission progressive de la réponse au frontend
-Déploiement	            Vercel	                        Hébergement de l'application Next.js
-Tests	                TypeScript / tsx	            Tests ciblés du chunking et du prompt
+| Couche | Technologie | Rôle |
+| --- | --- | --- |
+| Frontend | Next.js, React, TypeScript | Interface utilisateur et gestion du chat |
+| Style | Tailwind CSS | Mise en forme responsive de l'interface |
+| Backend | Next.js Route Handlers, Node.js | Endpoints REST et orchestration du pipeline |
+| Parsing PDF | `pdf-parse` | Extraction du texte page par page |
+| Chunking | LangChain Text Splitters | Découpage récursif du texte avec overlap |
+| LLM | Claude / Anthropic | Génération des réponses |
+| Embeddings | Gemini Embeddings | Vectorisation des chunks et des questions |
+| Orchestration LLM | LangChain | Messages, modèle Claude et text splitting |
+| Base vectorielle | Chroma Cloud | Persistance et recherche vectorielle |
+| Similarité | Cosine | Classement des chunks pertinents |
+| Streaming | Server-Sent Events (SSE) | Transmission progressive de la réponse au frontend |
+| Déploiement | Vercel | Hébergement de l'application Next.js |
+| Tests | TypeScript / `tsx` | Tests ciblés du chunking et du prompt |
 
 ## 6. Structure du projet
 
 La structure du projet sépare les composants frontend, les routes API, les types TypeScript et les différentes étapes du pipeline RAG.
 
+```md
 docchat/
 ├── documents/
 │   ├── Informatique.pdf
@@ -180,18 +182,26 @@ docchat/
 ├── package.json
 ├── tsconfig.json
 └── README.md
-
+```
 
 **Responsabilités principales**
 
 src/app/api/ : expose les endpoints HTTP de l'application.
+
 src/components/ : contient les composants React de l'interface utilisateur.
+
 src/lib/rag/ : contient les différentes étapes métier du pipeline RAG.
+
 src/lib/types/ : définit les contrats TypeScript partagés entre les couches.
+
 pdf.ts : extrait le texte et les pages du document PDF.
+
 chroma.ts : encapsule l'accès à la base vectorielle Chroma Cloud.
+
 llm.ts : configure et expose le modèle Claude.
+
 tests/ : contient les tests ciblés des composants déterministes du pipeline.
+
 documents/ : contient le PDF d'exemple libre de droits et le jeu d'évaluation RAG.
 
 
@@ -254,9 +264,7 @@ Les documents utilisent le mode :
 
 RETRIEVAL_DOCUMENT
 
-avec une dimension de vecteur fixée à :
-
-768
+avec une dimension de vecteur fixée à : 768
 
 Les embeddings sont calculés explicitement par l'application avant leur stockage dans la base vectorielle.
 
@@ -628,27 +636,30 @@ Cette commande permet de vérifier que l'application peut être compilée correc
 
 Le projet utilise les variables suivantes :
 
-\# LLM configuration
+```env
+# LLM configuration
 ANTHROPIC_API_KEY=
 
-\# Embeddings configuration
+# Embeddings configuration
 GEMINI_API_KEY=
 
-\# Vector database configuration
+# Vector database configuration
 CHROMA_API_KEY=
 CHROMA_TENANT=
 CHROMA_DATABASE=
 CHROMA_HOST=
+```
 
 ### Rôle des variables      
 
-Variable            Utilisation
-ANTHROPIC_API_KEY	Accès au modèle Claude utilisé pour la génération
-GEMINI_API_KEY	    Génération des embeddings des documents et questions
-CHROMA_API_KEY	    Authentification auprès de Chroma Cloud
-CHROMA_TENANT	    Tenant Chroma Cloud
-CHROMA_DATABASE	    Base Chroma utilisée par DocChat
-CHROMA_HOST	        Host du service Chroma Cloud
+| Variable | Utilisation |
+| --- | --- | 
+|ANTHROPIC_API_KEY | Accès au modèle Claude utilisé pour la génération |
+|GEMINI_API_KEY	| Génération des embeddings des documents et questions |
+|CHROMA_API_KEY	 | Authentification auprès de Chroma Cloud |
+|CHROMA_TENANT	  |  Tenant Chroma Cloud |
+|CHROMA_DATABASE	|    Base Chroma utilisée par DocChat |
+|CHROMA_HOST	    |    Host du service Chroma Cloud |
 
 
 Les vraies valeurs sont stockées uniquement :
@@ -707,11 +718,12 @@ upload PDF
 ## 15. Tests
 
 Le projet contient plusieurs tests ciblés sur les parties déterministes ou facilement vérifiables du pipeline.
-
+```md
 tests/
 ├── chunking.test.ts
 ├── prompt.test.ts
 └── chroma-embeddings.test.ts
+```
 
 ### Test du chunking
 npx tsx tests/chunking.test.ts
